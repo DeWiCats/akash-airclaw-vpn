@@ -1,0 +1,5 @@
+{
+  "$schema": "../config.schema.json",
+  "logoUrl": "https://raw.githubusercontent.com/akash-network/awesome-akash/master/softether-vpn/se.png",
+  "ssh": false
+}
