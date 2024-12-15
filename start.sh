@@ -1,7 +1,7 @@
 #!/bin/bash
 # By Dimokus (https://t.me/Dimokus)
 source $HOME/.bashrc
-TZ=Europe/Kiev
+TZ=Europe/Uk
 ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 apt-get update
 apt-get upgrade -y
