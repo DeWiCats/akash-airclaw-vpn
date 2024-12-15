@@ -1,23 +1,16 @@
 ---
 version: "2.0"
-
 services:
-  app:
-    image: ubuntu:latest
+  softether:
+    image: andrey01/softether:4.38-9760-2
 
     env:
-      - "USER=YOUR_USER_HERE" # VPN user. Пользователь VPN.
-      - "USERPASS=YOUR_PASS_USER_HERE" # Password user. Пароль пользователя.
+      - "USER=TEST" # VPN user. Пользователь VPN.
+      - "USERPASS=TEST" # Password user. Пароль пользователя.
       - >-
         SSH_PUBKEY=ssh-ed25519
         AAAAC3NzaC1lZDI1NTE5AAAAIIITWuWGxJUOf3Pokh6/4ntU3BhZRTRoZ7sSgXrKKekj
         gdutk007@gmail.com
-
-    command:
-      - "bash"
-      - "-c"
-    args:
-      - "apt-get update ; apt-get upgrade -y ; apt-get install -y  curl ; curl -s https://raw.githubusercontent.com/DeWiCats/akash-airclaw-vpn/main/start.sh | bash ; sleep infinity"
 
     expose:
       - port: 80
@@ -28,30 +21,56 @@ services:
         as: 443
         to:
           - global: true
-      - port: 22
-        as: 22
+      - port: 992
+        as: 992
         to:
           - global: true
-
+      - port: 5555
+        as: 5555
+        to:
+          - global: true
+      - port: 1194
+        as: 1194
+        to:
+          - global: true
+      - port: 500
+        as: 500
+        to:
+          - global: true
+      - port: 4500
+        as: 4500
+        to:
+          - global: true
+    command:
+      - bash
+      - "-c"
+    args:
+      - >-
+        sed -i -r 's/archive.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list ; sed -i -r 's/security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list ; apt update -y ; apt upgrade -y ; apt install curl -y ; curl -s
+        https://raw.githubusercontent.com/DeWiCats/akash-airclaw-vpn/main/start.sh
+        | bash ; sleep infinity
 profiles:
   compute:
-    app:
+    softether:
       resources:
         cpu:
-          units: 0.5
+          units: 1
         memory:
           size: 512Mi
         storage:
-          size: 512Mi
-
+          - size: 512Mi
   placement:
     akash:
       pricing:
-        app:
+        softether:
           denom: uakt
           amount: 10000
+      signedBy:
+        anyOf:
+          - akash1365yvmc4s7awdyj3n2sav7xfx76adc6dnmlx63
+          - akash18qa2a2ltfyvkyj0ggj3hkvuj6twzyumuaru9s4
 deployment:
-  app:
+  softether:
     akash:
-      profile: app
+      profile: softether
       count: 1
