@@ -8,6 +8,10 @@ services:
     env:
       - "USER=YOUR_USER_HERE" # VPN user. Пользователь VPN.
       - "USERPASS=YOUR_PASS_USER_HERE" # Password user. Пароль пользователя.
+      - >-
+        SSH_PUBKEY=ssh-ed25519
+        AAAAC3NzaC1lZDI1NTE5AAAAIIITWuWGxJUOf3Pokh6/4ntU3BhZRTRoZ7sSgXrKKekj
+        gdutk007@gmail.com
 
     command:
       - "bash"

@@ -102,3 +102,34 @@ echo ========= PASSWORD USER VPN: $USERPASS ========
 echo ==== Admin server password: $ADMINPASS ====
 echo ========= Hub password: $HUBPASS ==========
 echo ===========================================
+
+ echo ""
+  echo "================================================================"
+  echo "Save the following data somewhere safe."
+  echo "================================================================"
+  echo ""
+  echo "===================== OpenVPN VPN =============================="
+  echo "Your OpenVPN config (save it as vpn.ovpn file):"
+  echo "# --------------------- CUT HERE -------------------------------"
+  cat *_openvpn_remote_access_l3.ovpn | \
+    grep -Ev '^\#|^;' | strings | \
+    sed 's/^remote .*/remote <SET YOUR AKASH INGRESS URI HERE> <SET YOUR AKASH PORT MAPPED TO 443>/g' | \
+    sed 's/^proto udp/proto tcp/g' | \
+    sed 's/^cipher .*/cipher AES-256-CBC/g'
+  echo "# --------------------- CUT HERE -------------------------------"
+  rm -vf -- openvpn.zip *_openvpn_remote_access_l3.ovpn >/dev/null
+  echo ""
+  echo "=================== SoftEther VPN =============================="
+  echo "SoftEther VPN Server Administrator Password: $ADMINPASS"
+  echo "SoftEther VPN DEFAULT Hub Password: $HUBPASS"
+  echo ""
+  echo "=================== L2TP/IPSec VPN ============================="
+  echo "L2TP PSK (Pre-shared key) is: $PSKPASS"
+  echo "L2TP IPSec Options"
+  echo "Phase 1 Algorithms: aes128-sha1-modp2048"
+  echo "Phase 2 Algorithms: aes128-sha1"
+  echo ""
+  echo "============ Username & Password for VPN authentication ========"
+  echo "Username: $USER"
+  echo "Password: $USERPASS"
+  echo ""
