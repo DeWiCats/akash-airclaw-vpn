@@ -12,5 +12,6 @@ RUN apt-get -y install make gcc openssl unzip goxkcdpwgen
 
 WORKDIR /opt/softether/vpnserver
 RUN make
-COPY launch /
-CMD /launch
+COPY launch.sh /
+RUN chmod +x /launch.sh
+CMD /launch.sh
