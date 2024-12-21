@@ -2,16 +2,7 @@
 version: "2.0"
 services:
   softether:
-    image: andrey01/softether:4.38-9760-2
-
-    env:
-      - "USER=TEST" # VPN user. Пользователь VPN.
-      - "USERPASS=TEST" # Password user. Пароль пользователя.
-      - >-
-        SSH_PUBKEY=ssh-ed25519
-        AAAAC3NzaC1lZDI1NTE5AAAAIIITWuWGxJUOf3Pokh6/4ntU3BhZRTRoZ7sSgXrKKekj
-        gdutk007@gmail.com
-
+    image: ghcr.io/akash-network/ubuntu-2404-ssh:2
     expose:
       - port: 80
         as: 80
@@ -41,36 +32,41 @@ services:
         as: 4500
         to:
           - global: true
+      - port: 22
+        as: 22
+        to:
+          - global: true
+    env:
+      - >-
+        SSH_PUBKEY=ssh-ed25519
+        AAAAC3NzaC1lZDI1NTE5AAAAIIITWuWGxJUOf3Pokh6/4ntU3BhZRTRoZ7sSgXrKKekj
+        gdutk007@gmail.com
+      - "USER=TEST" # VPN server username
+      - "USERPASS=TEST" # VPN server Password
     command:
       - bash
       - "-c"
     args:
       - >-
-        sed -i -r 's/archive.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list ; sed -i -r 's/security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list ; apt update -y ; apt upgrade -y ; apt install curl -y ; curl -s
-        https://raw.githubusercontent.com/DeWiCats/akash-airclaw-vpn/main/start.sh
-        | bash ; sleep infinity
+        apt update -y; apt upgrade -y; apt install -y git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev libffi-dev wget tar nginx unzip xz-utils make gcc goxkcdpwgen openssl libreadline-dev libncurses-dev curl; curl -s https://raw.githubusercontent.com/DeWiCats/akash-airclaw-vpn/main/start.sh | bash; sleep infinity
 profiles:
   compute:
     softether:
       resources:
         cpu:
-          units: 1
+          units: 2.0
         memory:
-          size: 512Mi
+          size: 4096Mi
         storage:
-          - size: 512Mi
+          - size: 20Gi
   placement:
-    akash:
+    dcloud:
       pricing:
         softether:
-          denom: uakt
+          denom: ibc/170C677610AC31DF0904FFE09CD3B5C657492170E7E52372E48756B71E56F2F1  # make sure to change this when creatig your server
           amount: 10000
-      signedBy:
-        anyOf:
-          - akash1365yvmc4s7awdyj3n2sav7xfx76adc6dnmlx63
-          - akash18qa2a2ltfyvkyj0ggj3hkvuj6twzyumuaru9s4
 deployment:
   softether:
-    akash:
+    dcloud:
       profile: softether
       count: 1
