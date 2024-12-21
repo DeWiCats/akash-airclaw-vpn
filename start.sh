@@ -1,6 +1,14 @@
 #!/bin/bash
 # By Dimokus (https://t.me/Dimokus)
 source $HOME/.bashrc
+
+
+
+echo "#### SETTING UP SSH ######"
+echo $SSH_PUBKEY >> ~/.ssh/authorized_keys
+service start ssh
+service ssh status
+
 TZ=Europe/Uk
 ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 apt-get update
