@@ -6,7 +6,7 @@ source $HOME/.bashrc
 
 echo "#### SETTING UP SSH ######"
 echo $SSH_PUBKEY >> ~/.ssh/authorized_keys
-service start ssh
+service ssh start
 service ssh status
 
 TZ=Europe/Uk
