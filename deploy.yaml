@@ -48,7 +48,7 @@ services:
       - "-c"
     args:
       - >-
-        apt update -y; apt upgrade -y; apt install -y git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev libffi-dev wget tar nginx unzip xz-utils make gcc goxkcdpwgen openssl libreadline-dev libncurses-dev curl; curl -s https://raw.githubusercontent.com/DeWiCats/akash-airclaw-vpn/main/start.sh | bash; sleep infinity
+        apt update -y; apt upgrade -y; apt install -y git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev libffi-dev wget tar nginx unzip xz-utils make gcc goxkcdpwgen openssl libreadline-dev libncurses-dev curl; curl -s https://raw.githubusercontent.com/DeWiCats/akash-airclaw-vpn/decouple-old-image/start.sh | bash; sleep infinity
 profiles:
   compute:
     softether:
