@@ -32,7 +32,7 @@ CONFIG=/vpnserver/vpn_server.config
 line=$(grep -A 19 -n DDnsClient $CONFIG | grep -m1 -B19 "}" | grep "bool Disabled" | awk -F "-" '{print $1}')
 sed -i $line's/false/true/' $CONFIG
 line=$(grep -n DisableJsonRpcWebApi $CONFIG |awk -F ":" '{print $1}')
-sed -i $line's/false/true/' $CONFIG
+#sed -i $line's/false/true/' $CONFIG
 ADMINPASS=adminakash
 HUBPASS=hubakash
 PSKPASS=akashvpn
