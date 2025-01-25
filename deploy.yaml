@@ -54,11 +54,11 @@ profiles:
     softether:
       resources:
         cpu:
-          units: 2.0
+          units: 4.0
         memory:
-          size: 4096Mi
+          size: 8128Mi
         storage:
-          - size: 20Gi
+          - size: 30Gi
   placement:
     dcloud:
       pricing:
