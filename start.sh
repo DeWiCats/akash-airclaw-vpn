@@ -32,21 +32,16 @@ CONFIG=/vpnserver/vpn_server.config
 line=$(grep -A 19 -n DDnsClient $CONFIG | grep -m1 -B19 "}" | grep "bool Disabled" | awk -F "-" '{print $1}')
 sed -i $line's/false/true/' $CONFIG
 line=$(grep -n DisableJsonRpcWebApi $CONFIG |awk -F ":" '{print $1}')
-#sed -i $line's/false/true/' $CONFIG
+# sed -i $line's/false/true/' $CONFIG
 
 # Add new listener for port 80
-line=$(grep -n "declare ListenerList" $CONFIG | awk -F ":" '{print $1}')
-awk -v line=$line '
-NR==line {
-    print $0
-    print "  declare Listener4"
-    print "  {"
-    print "   bool DisableDos false"
-    print "   bool Enabled true"
-    print "   uint Port 80"
-    print "  }"
-}
-NR!=line {print $0}' $CONFIG > $CONFIG.tmp && mv $CONFIG.tmp $CONFIG
+sed -i '/declare Listener3/a\
+        declare Listener4\
+        {\
+                bool DisableDos false\
+                bool Enabled true\
+                uint Port 80\
+        }' $CONFIG
 
 ADMINPASS=adminakash
 HUBPASS=hubakash
